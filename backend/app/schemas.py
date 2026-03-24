@@ -27,3 +27,14 @@ class TaskResponse(BaseModel):
 
 class MessageResponse(BaseModel):
     message: str
+
+
+class ChatRequest(BaseModel):
+    conversation_id: int | None = None
+    message: str
+
+
+class ChatResponse(BaseModel):
+    conversation_id: int
+    response: str
+    tool_calls: list[dict] = []

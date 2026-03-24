@@ -18,9 +18,8 @@ Built for Panaversity AI Agent Factory Hackathon II.
 - /phase1/src - Phase I Python console app
 - /frontend - Phase II Next.js app
 - /backend - Phase II FastAPI app
-- /backend/mcp - Phase III MCP server (tools for AI agent)
+- /backend/todo_mcp - Phase III MCP server (tools for AI agent)
 - /backend/agent - Phase III OpenAI Agents SDK integration
-- /backend/models - Database models (conversations, messages)
 
 ## Phase III — AI-Powered Chatbot
 - Users manage todos via natural language conversation
