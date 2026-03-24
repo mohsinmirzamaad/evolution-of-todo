@@ -91,7 +91,7 @@ export function useTasks() {
   );
 
   const updateTask = useCallback(
-    async (id: number, data: { title?: string; description?: string }) => {
+    async (id: number, data: { title?: string; description?: string | null }) => {
       const res = await authFetch(`/${id}`, {
         method: "PUT",
         body: JSON.stringify(data),

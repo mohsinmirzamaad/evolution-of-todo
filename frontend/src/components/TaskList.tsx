@@ -14,7 +14,7 @@ interface TaskListProps {
   loading: boolean;
   onToggle: (id: number) => Promise<void>;
   onDelete: (id: number) => Promise<void>;
-  onUpdate: (id: number, data: { title?: string; description?: string }) => Promise<void>;
+  onUpdate: (id: number, data: { title?: string; description?: string | null }) => Promise<void>;
 }
 
 export default function TaskList({ tasks, loading, onToggle, onDelete, onUpdate }: TaskListProps) {

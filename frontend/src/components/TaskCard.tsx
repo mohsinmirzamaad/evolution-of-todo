@@ -13,7 +13,7 @@ interface TaskCardProps {
   task: Task;
   onToggle: (id: number) => Promise<void>;
   onDelete: (id: number) => Promise<void>;
-  onUpdate: (id: number, data: { title?: string; description?: string }) => Promise<void>;
+  onUpdate: (id: number, data: { title?: string; description?: string | null }) => Promise<void>;
 }
 
 export default function TaskCard({ task, onToggle, onDelete, onUpdate }: TaskCardProps) {
@@ -26,7 +26,7 @@ export default function TaskCard({ task, onToggle, onDelete, onUpdate }: TaskCar
     if (!title.trim()) return;
     setBusy(true);
     try {
-      await onUpdate(task.id, { title: title.trim(), description: description.trim() || undefined });
+      await onUpdate(task.id, { title: title.trim(), description: description.trim() || null });
       setEditing(false);
     } finally {
       setBusy(false);
