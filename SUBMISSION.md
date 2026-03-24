@@ -6,7 +6,7 @@
 
 ## Phase II — Full Stack Web App
 - GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
-- Deployment: (Vercel link — add when done)
+- Deployment: (https://evolution-of-todo-gray.vercel.app)
 - Demo Video: (add when done)
 
 ## Phase III — AI Chatbot
