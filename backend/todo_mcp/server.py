@@ -1,5 +1,10 @@
 import json
+import sys
 from datetime import datetime, timezone
+from pathlib import Path
+
+# Add backend dir to sys.path so 'app' package is importable when run as MCP subprocess
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from mcp.server.fastmcp import FastMCP
 from sqlmodel import Session, select

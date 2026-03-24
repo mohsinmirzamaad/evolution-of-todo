@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from agents import Agent, Runner
@@ -11,8 +12,9 @@ def _create_mcp_server() -> MCPServerStdio:
         params={
             "command": "uv",
             "args": ["run", "mcp", "run", "todo_mcp/server.py:mcp_server"],
+            "cwd": BACKEND_DIR,
+            "env": {**os.environ},
         },
-        cwd=BACKEND_DIR,
     )
 
 
