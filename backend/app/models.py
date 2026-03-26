@@ -64,3 +64,30 @@ class Message(SQLModel, table=True):
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
+
+
+class ChatKitThread(SQLModel, table=True):
+    __tablename__ = "chatkit_thread"
+
+    id: str = Field(primary_key=True)
+    user_id: str = Field(foreign_key="user.id", index=True)
+    title: str | None = Field(default=None)
+    status_json: str = Field(default='{"type":"active"}')
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )
+    updated_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )
+
+
+class ChatKitItem(SQLModel, table=True):
+    __tablename__ = "chatkit_item"
+
+    id: str = Field(primary_key=True)
+    thread_id: str = Field(foreign_key="chatkit_thread.id", index=True)
+    type: str
+    data_json: str
+    created_at: datetime = Field(
+        default_factory=lambda: datetime.now(timezone.utc)
+    )

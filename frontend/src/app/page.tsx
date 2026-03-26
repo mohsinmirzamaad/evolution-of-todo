@@ -51,12 +51,20 @@ export default function Dashboard() {
               <p className="text-xs text-gray-500">{session.user.email}</p>
             </div>
           </div>
-          <button
-            onClick={handleSignOut}
-            className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
-          >
-            Sign Out
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => router.push("/chat")}
+              className="rounded-lg bg-blue-600 px-3 py-1.5 text-sm font-medium text-white transition-colors hover:bg-blue-700"
+            >
+              AI Chat
+            </button>
+            <button
+              onClick={handleSignOut}
+              className="rounded-lg border border-gray-200 bg-white px-3 py-1.5 text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900"
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-2xl space-y-6 px-4 py-8">
