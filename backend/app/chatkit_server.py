@@ -20,7 +20,7 @@ class TodoChatKitServer(ChatKitServer["RequestContext"]):
             thread.id, after=None, limit=50, order="asc", context=context
         )
         items = items_page.data
-        input_items = simple_to_agent_input(items)
+        input_items = await simple_to_agent_input(items)
 
         agent_context = AgentContext(
             thread=thread,
