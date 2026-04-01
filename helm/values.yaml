@@ -1,12 +1,12 @@
 backend:
   image: todo-backend
-  tag: latest
+  tag: v2
   port: 8000
   replicas: 1
 
 frontend:
   image: todo-frontend
-  tag: latest
+  tag: v2
   port: 3000
   replicas: 1
 
