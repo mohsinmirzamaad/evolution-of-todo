@@ -15,8 +15,8 @@
 - Demo Video: (https://youtu.be/E8QeMUogrE0)
 
 ## Phase IV — Local Kubernetes
-- GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
-- Demo Video: (add when done)
+- GitHub:  GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
+- Demo Video: (https://youtu.be/QeZhCa-vf6A)
 
 ## Phase V — Cloud Deployment
 - GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
