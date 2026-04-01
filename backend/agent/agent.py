@@ -15,6 +15,7 @@ def _create_mcp_server() -> MCPServerStdio:
             "cwd": BACKEND_DIR,
             "env": {**os.environ},
         },
+        client_session_timeout_seconds=30,
     )
 
 
