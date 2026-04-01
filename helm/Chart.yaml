@@ -1,0 +1,5 @@
+apiVersion: v2
+name: todo-app
+description: Todo App - Hackathon II
+version: 0.1.0
+type: application
