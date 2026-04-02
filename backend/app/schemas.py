@@ -2,15 +2,23 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict
 
+from app.models import Priority
+
 
 class TaskCreate(BaseModel):
     title: str
     description: str | None = None
+    priority: Priority | None = None
+    due_date: datetime | None = None
+    tags: list[str] = []
 
 
 class TaskUpdate(BaseModel):
     title: str | None = None
     description: str | None = None
+    priority: Priority | None = None
+    due_date: datetime | None = None
+    tags: list[str] | None = None
 
 
 class TaskResponse(BaseModel):
@@ -21,6 +29,9 @@ class TaskResponse(BaseModel):
     title: str
     description: str | None
     completed: bool
+    priority: Priority | None
+    due_date: datetime | None
+    tags: list[str]
     created_at: datetime
     updated_at: datetime
 

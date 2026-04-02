@@ -1,7 +1,16 @@
+import enum
 from datetime import datetime, timezone
 
 from sqlalchemy import Boolean, Column, DateTime, String
+from sqlalchemy import Enum as SAEnum
+from sqlalchemy.dialects.postgresql import JSON
 from sqlmodel import Field, SQLModel
+
+
+class Priority(str, enum.Enum):
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
 
 
 class User(SQLModel, table=True):
@@ -32,6 +41,14 @@ class Task(SQLModel, table=True):
     title: str = Field(max_length=200)
     description: str | None = Field(default=None, max_length=1000)
     completed: bool = Field(default=False, index=True)
+    priority: Priority | None = Field(
+        default=None,
+        sa_column=Column(SAEnum(Priority, name="priority"), nullable=True, index=True),
+    )
+    due_date: datetime | None = Field(default=None, index=True)
+    tags: list[str] = Field(
+        default_factory=list, sa_column=Column(JSON, nullable=False, default=[])
+    )
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)
     )
