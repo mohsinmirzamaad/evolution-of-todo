@@ -11,11 +11,11 @@
 
 ## Phase III — AI Chatbot
 - GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
-- Deployment: (add when done)
+- Deployment: (https://evolution-of-todo-gray.vercel.app)
 - Demo Video: (https://youtu.be/E8QeMUogrE0)
 
 ## Phase IV — Local Kubernetes
-- GitHub:  GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
+- GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
 - Demo Video: (https://youtu.be/QeZhCa-vf6A)
 
 ## Phase V — Cloud Deployment (GKE)
