@@ -1,12 +1,12 @@
 backend:
-  image: todo-backend
-  tag: v4
+  image: gcr.io/project-6b07c7a3-5303-403d-bf7/todo-backend
+  tag: latest
   port: 8000
   replicas: 1
 
 frontend:
-  image: todo-frontend
-  tag: v3
+  image: gcr.io/project-6b07c7a3-5303-403d-bf7/todo-frontend
+  tag: latest
   port: 3000
   replicas: 1
 

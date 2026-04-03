@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 
 from sqlalchemy import Boolean, Column, DateTime, String
 from sqlalchemy import Enum as SAEnum
-from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy.dialects.postgresql import JSONB
 from sqlmodel import Field, SQLModel
 
 
@@ -47,7 +47,7 @@ class Task(SQLModel, table=True):
     )
     due_date: datetime | None = Field(default=None, index=True)
     tags: list[str] = Field(
-        default_factory=list, sa_column=Column(JSON, nullable=False, default=[])
+        default_factory=list, sa_column=Column(JSONB, nullable=False, default=[])
     )
     created_at: datetime = Field(
         default_factory=lambda: datetime.now(timezone.utc)

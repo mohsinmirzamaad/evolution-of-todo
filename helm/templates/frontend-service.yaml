@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}-frontend
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: {{ .Release.Name }}-frontend
   ports:
     - port: {{ .Values.frontend.port }}
       targetPort: {{ .Values.frontend.port }}
-      nodePort: 30300

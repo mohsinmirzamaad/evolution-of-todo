@@ -1,0 +1,77 @@
+name: Build & Deploy to GKE
+
+on:
+  push:
+    branches: [main]
+
+env:
+  PROJECT_ID: project-6b07c7a3-5303-403d-bf7
+  GKE_CLUSTER: evolution-of-todo
+  GKE_REGION: us-central1
+  RELEASE_NAME: todo-app
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: Configure Docker for GCR
+        run: gcloud auth configure-docker --quiet
+
+      - name: Set image tag
+        run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Build & push backend image
+        run: |
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/todo-backend:${{ env.TAG }} ./backend
+          docker push gcr.io/${{ env.PROJECT_ID }}/todo-backend:${{ env.TAG }}
+
+      - name: Build & push frontend image
+        run: |
+          docker build -t gcr.io/${{ env.PROJECT_ID }}/todo-frontend:${{ env.TAG }} \
+            --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
+            ./frontend
+          docker push gcr.io/${{ env.PROJECT_ID }}/todo-frontend:${{ env.TAG }}
+
+      - name: Get GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: ${{ env.GKE_CLUSTER }}
+          location: ${{ env.GKE_REGION }}
+
+      - name: Create/update Kubernetes secrets
+        run: |
+          kubectl create secret generic ${{ env.RELEASE_NAME }}-secrets \
+            --from-literal=DATABASE_URL="${{ secrets.DATABASE_URL }}" \
+            --from-literal=BETTER_AUTH_SECRET="${{ secrets.BETTER_AUTH_SECRET }}" \
+            --from-literal=OPENAI_API_KEY="${{ secrets.OPENAI_API_KEY }}" \
+            --from-literal=NEXT_PUBLIC_API_URL="${{ secrets.NEXT_PUBLIC_API_URL }}" \
+            --from-literal=BETTER_AUTH_URL="${{ secrets.BETTER_AUTH_URL }}" \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install ${{ env.RELEASE_NAME }} ./helm \
+            --set backend.tag=${{ env.TAG }} \
+            --set frontend.tag=${{ env.TAG }}
+
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/${{ env.RELEASE_NAME }}-backend --timeout=120s
+          kubectl rollout status deployment/${{ env.RELEASE_NAME }}-frontend --timeout=120s
+          echo "--- Service Info ---"
+          kubectl get svc ${{ env.RELEASE_NAME }}-frontend ${{ env.RELEASE_NAME }}-backend
