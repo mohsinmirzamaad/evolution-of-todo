@@ -18,7 +18,7 @@
 - GitHub:  GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
 - Demo Video: (https://youtu.be/QeZhCa-vf6A)
 
-## Phase V — Cloud Deployment
+## Phase V — Cloud Deployment (GKE)
 - GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
-- Deployment: (http://136.111.89.4:3000)
-- Demo Video: (add when done)
+- Deployment: http://136.111.89.4:3000
+- Demo Video: https://youtu.be/tGBZB_TB3Eg
