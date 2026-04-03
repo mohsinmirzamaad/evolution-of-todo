@@ -20,5 +20,5 @@
 
 ## Phase V — Cloud Deployment
 - GitHub: https://github.com/mohsinmirzamaad/evolution-of-todo
-- Deployment: (add when done)
+- Deployment: (http://136.111.89.4:3000)
 - Demo Video: (add when done)
