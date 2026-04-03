@@ -5,7 +5,7 @@ set -euo pipefail
 PROJECT_ID="project-6b07c7a3-5303-403d-bf7"
 CLUSTER_NAME="evolution-of-todo"
 REGION="us-central1"
-GCR_HOST="gcr.io/${PROJECT_ID}"
+AR_HOST="${REGION}-docker.pkg.dev/${PROJECT_ID}/todo-app"
 RELEASE_NAME="todo-app"
 TAG="${1:-latest}"
 
@@ -23,24 +23,24 @@ gcloud container clusters get-credentials "${CLUSTER_NAME}" --region "${REGION}"
 # --- 2. Build Docker images ---
 echo ""
 echo "==> Building backend image..."
-docker build -t "${GCR_HOST}/todo-backend:${TAG}" ./backend
+docker build -t "${AR_HOST}/todo-backend:${TAG}" ./backend
 
 echo ""
 echo "==> Building frontend image..."
-docker build -t "${GCR_HOST}/todo-frontend:${TAG}" \
+docker build -t "${AR_HOST}/todo-frontend:${TAG}" \
   --build-arg NEXT_PUBLIC_API_URL="${NEXT_PUBLIC_API_URL:-http://localhost:8000}" \
   ./frontend
 
-# --- 3. Push images to GCR ---
+# --- 3. Push images to Artifact Registry ---
 echo ""
-echo "==> Configuring Docker for GCR..."
-gcloud auth configure-docker --quiet
+echo "==> Configuring Docker for Artifact Registry..."
+gcloud auth configure-docker ${REGION}-docker.pkg.dev --quiet
 
 echo "==> Pushing backend image..."
-docker push "${GCR_HOST}/todo-backend:${TAG}"
+docker push "${AR_HOST}/todo-backend:${TAG}"
 
 echo "==> Pushing frontend image..."
-docker push "${GCR_HOST}/todo-frontend:${TAG}"
+docker push "${AR_HOST}/todo-frontend:${TAG}"
 
 # --- 4. Create Kubernetes secrets from .env ---
 echo ""

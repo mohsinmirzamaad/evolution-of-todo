@@ -26,23 +26,23 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Configure Docker for GCR
-        run: gcloud auth configure-docker --quiet
+      - name: Configure Docker for Artifact Registry
+        run: gcloud auth configure-docker ${{ env.GKE_REGION }}-docker.pkg.dev --quiet
 
       - name: Set image tag
         run: echo "TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
       - name: Build & push backend image
         run: |
-          docker build -t gcr.io/${{ env.PROJECT_ID }}/todo-backend:${{ env.TAG }} ./backend
-          docker push gcr.io/${{ env.PROJECT_ID }}/todo-backend:${{ env.TAG }}
+          docker build -t ${{ env.GKE_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/todo-app/todo-backend:${{ env.TAG }} ./backend
+          docker push ${{ env.GKE_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/todo-app/todo-backend:${{ env.TAG }}
 
       - name: Build & push frontend image
         run: |
-          docker build -t gcr.io/${{ env.PROJECT_ID }}/todo-frontend:${{ env.TAG }} \
+          docker build -t ${{ env.GKE_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/todo-app/todo-frontend:${{ env.TAG }} \
             --build-arg NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
             ./frontend
-          docker push gcr.io/${{ env.PROJECT_ID }}/todo-frontend:${{ env.TAG }}
+          docker push ${{ env.GKE_REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/todo-app/todo-frontend:${{ env.TAG }}
 
       - name: Get GKE credentials
         uses: google-github-actions/get-gke-credentials@v2

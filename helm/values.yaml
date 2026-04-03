@@ -1,11 +1,11 @@
 backend:
-  image: gcr.io/project-6b07c7a3-5303-403d-bf7/todo-backend
+  image: us-central1-docker.pkg.dev/project-6b07c7a3-5303-403d-bf7/todo-app/todo-backend
   tag: latest
   port: 8000
   replicas: 1
 
 frontend:
-  image: gcr.io/project-6b07c7a3-5303-403d-bf7/todo-frontend
+  image: us-central1-docker.pkg.dev/project-6b07c7a3-5303-403d-bf7/todo-app/todo-frontend
   tag: latest
   port: 3000
   replicas: 1
